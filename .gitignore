@@ -1,0 +1,9 @@
+# General
+**/node_modules/**
+
+# Task 0 - do not push dist/main.js
+Webpack/task_0/dist/main.js
+Webpack/task_0/dist/main.js.LICENSE.txt
+
+# Task 3 - do not push public build output
+Webpack/task_3/public/
