@@ -1,0 +1,50 @@
+.notification-title {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.notification-items {
+  border: 2px dashed #e1003c;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  position: relative;
+}
+
+.notification-items p {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.notification-items button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.notification-items button img {
+  width: 20px;
+  height: 20px;
+}
+
+.notification-items ul {
+  margin: 20px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notification-items li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-items li:last-child {
+  border-bottom: none;
+}
+
+
