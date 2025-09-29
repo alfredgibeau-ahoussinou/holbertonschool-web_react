@@ -1,0 +1,13 @@
+.App-body {
+  padding: 40px 20px;
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.App-body p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+
