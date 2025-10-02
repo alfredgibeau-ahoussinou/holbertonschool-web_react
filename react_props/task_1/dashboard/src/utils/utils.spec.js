@@ -1,27 +1,33 @@
-import { getCurrentYear, getFooterCopy, getLatestNotification } from './utils';
+import { getCurrentYear, getFooterCopy, getLatestNotification } from "./utils";
+import { expect, describe, it } from '@jest/globals';
 
-describe('utils', () => {
-  describe('getCurrentYear', () => {
-    test('returns the current year', () => {
-      const currentYear = new Date().getFullYear();
-      expect(getCurrentYear()).toBe(currentYear);
+describe('Test utils.js', () => {
+  describe('getCurrentYear()', () => {
+    it('Should return current year', () => {
+      const expectValue = new Date().getFullYear();
+      const funcValue = getCurrentYear();
+      expect(funcValue).toEqual(expectValue);
     });
   });
 
-  describe('getFooterCopy', () => {
-    test('returns correct string when argument is true', () => {
-      expect(getFooterCopy(true)).toBe('Holberton School');
+  describe('getFooterCopy()', () => {
+    it('Should return "Holberton School" when true', () => {
+      const expectValue = "Holberton School";
+      const funcValue = getFooterCopy(true)
+      expect(funcValue).toEqual(expectValue);
     });
-
-    test('returns correct string when argument is false', () => {
-      expect(getFooterCopy(false)).toBe('Holberton School main dashboard');
+    it('Should return "Holberton School main dashboard" when false', () => {
+      const expectValue = "Holberton School main dashboard";
+      const funcValue = getFooterCopy(false)
+      expect(funcValue).toEqual(expectValue);
     });
   });
 
-  describe('getLatestNotification', () => {
-    test('returns the correct notification string', () => {
-      const expected = '<strong>Urgent requirement</strong> - complete by EOD';
-      expect(getLatestNotification()).toBe(expected);
+  describe('getLatestNotification()', () => {
+    it('Should return the correct value', () => {
+      const expectValue = '<strong>Urgent requirement</strong> - complete by EOD';
+      const funcValue = getLatestNotification(false)
+      expect(funcValue).toEqual(expectValue);
     });
   });
 });

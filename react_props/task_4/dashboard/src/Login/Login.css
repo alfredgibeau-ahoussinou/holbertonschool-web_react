@@ -1,13 +1,7 @@
-.App-body {
-  padding: 40px 20px;
-  text-align: left;
-  max-width: 800px;
-  margin: 0 auto;
+.App-login {
+    margin: 20px;
 }
 
-.App-body p {
-  font-size: 1.2rem;
-  color: #333;
+.App-login input {
+    margin: 0px 10px 0px 10px;
 }
-
-

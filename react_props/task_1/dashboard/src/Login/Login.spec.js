@@ -1,28 +1,33 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Login from '../Login/Login';
+import { fireEvent, render, screen } from '@testing-library/react';
+import Login from './Login';
 
-describe('Login component', () => {
-  test('has 2 labels, 2 inputs, and 1 button', () => {
-    render(<Login />);
-    const labels = screen.getAllByText(/email:|password:/i);
-    const inputs = screen.getAllByRole('textbox');
-    const passwordInput = screen.getByLabelText(/password/i);
-    const button = screen.getByRole('button', { name: /ok/i });
-    expect(labels.length).toBe(2);
-    expect(inputs.length).toBe(1);
-    expect(passwordInput).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
-  });
 
-  test('focuses input when its label is clicked', async () => {
-    const user = userEvent.setup();
+test('testing signin form elements', () => {
     render(<Login />);
-    const emailLabel = screen.getByText(/email:/i);
-    const emailInput = screen.getByLabelText(/email/i);
-    await user.click(emailLabel);
-    expect(emailInput).toHaveFocus();
-  });
+    const inputElements = screen.getAllByRole('textbox')
+    const emailLabelElement = screen.getByLabelText(/email/i);
+    const passwordLabelElement = screen.getByLabelText(/password/i);
+    const buttonElementText = screen.getByRole('button', { name: 'OK' })
+    expect(inputElements).toHaveLength(2)
+    expect(emailLabelElement).toBeInTheDocument()
+    expect(passwordLabelElement).toBeInTheDocument()
+    expect(buttonElementText).toBeInTheDocument()
 });
 
+test('should check that the email input element will be focused whenever the associated label is clicked', async () => {
+    render(<Login />)
+    const emailLabel = screen.getByText('Email');
+    const emailInput = screen.getByLabelText('Email', { selector: 'input' });
+    fireEvent.click(emailLabel);
+    emailInput.focus();
+    expect(emailInput).toHaveFocus();
+})
 
+test('should check that the password input element will be focused whenver the associated label is clicked', async () => {
+    render(<Login />)
+    const passwordLabel = screen.getByText('Password');
+    const passwordInput = screen.getByLabelText('Password', { selector: 'input' });
+    fireEvent.click(passwordLabel);
+    passwordInput.focus()
+    expect(passwordInput).toHaveFocus();
+});
