@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { getFooterCopy } from '../utils/utils';
 import App from './App';
 
 describe('App', () => {
@@ -17,7 +18,8 @@ describe('App', () => {
   test('renders correct text in app-footer paragraph', () => {
     render(<App />);
     const currentYear = new Date().getFullYear();
-    const footerText = screen.getByText(`Copyright ${currentYear} - holberton School`);
+    const expectedCopy = getFooterCopy(true);
+    const footerText = screen.getByText(`Copyright ${currentYear} - ${expectedCopy}`);
     expect(footerText).toBeInTheDocument();
   });
 
