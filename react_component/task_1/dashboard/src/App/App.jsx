@@ -38,6 +38,9 @@ class App extends Component {
     const key = event && typeof event.key === 'string' ? event.key.toLowerCase() : '';
     const isCtrlPressed = !!(event && event.ctrlKey);
     if (isCtrlPressed && key === 'h') {
+      if (event && typeof event.preventDefault === 'function') {
+        event.preventDefault();
+      }
       window.alert('Logging you out');
       this.props.logOut();
     }
