@@ -4,6 +4,8 @@ import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
 import Footer from "../Footer/Footer.jsx";
 import CourseList from "../CourseList/CourseList.jsx";
+import BodySection from "../BodySection/BodySection.jsx";
+import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom.jsx";
 import { getLatestNotification } from "../utils/utils";
 
 const notificationsList = [
@@ -57,11 +59,18 @@ class App extends Component {
           <Header />
           {
             !isLoggedIn ? (
-              <Login />
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
             ) : (
-              <CourseList courses = {coursesList} />
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList courses = {coursesList} />
+              </BodySectionWithMarginBottom>
             )
           }
+          <BodySection title="News from the School">
+            <p>Holberton School News goes here</p>
+          </BodySection>
         </>
         <Footer />
       </>

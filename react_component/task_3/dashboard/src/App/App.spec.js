@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { test, expect, describe, beforeEach, afterEach, jest } from "@jest/globals";
 import App from "./App";
 
@@ -30,4 +30,10 @@ describe("App hotkey logout", () => {
     fireEvent.keyDown(window, { key: 'h', ctrlKey: true });
     expect(window.alert).toHaveBeenCalledWith('Logging you out');
   });
+});
+
+test('Displays News from the School section by default', () => {
+  render(<App />);
+  expect(screen.getByRole('heading', { level: 2, name: /News from the School/i })).toBeInTheDocument();
+  expect(screen.getByText(/Holberton School News goes here/i)).toBeInTheDocument();
 });
