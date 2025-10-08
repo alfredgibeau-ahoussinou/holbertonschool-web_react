@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { getLatestNotification } from '../utils/utils'
-import { test, expect, jest } from "@jest/globals";
+import { test, expect, jest, describe, afterEach } from "@jest/globals";
 import Notifications from './Notifications';
 
 test('Should display a title, button and a 3 list items, whenever the "displayDrawer" set to true', () => {
@@ -143,4 +143,51 @@ test('Logs correct message when a notification item is clicked', () => {
   fireEvent.click(listItems[0]);
   expect(consoleSpy).toHaveBeenCalledWith('Notification 1 has been marked as read');
   consoleSpy.mockRestore();
+});
+
+describe('Notifications shouldComponentUpdate behavior', () => {
+  afterEach(() => cleanup());
+
+  test('does not re-render when notifications length is unchanged', () => {
+    const initialProps = {
+      notifications: [
+        { id: 1, type: 'default', value: 'A' },
+        { id: 2, type: 'urgent', value: 'B' }
+      ],
+      displayDrawer: true
+    };
+    const { rerender } = render(<Notifications {...initialProps} />);
+    // same length, different content
+    const nextPropsSameLen = {
+      notifications: [
+        { id: 3, type: 'default', value: 'X' },
+        { id: 4, type: 'urgent', value: 'Y' }
+      ],
+      displayDrawer: true
+    };
+    rerender(<Notifications {...nextPropsSameLen} />);
+    // Expect still contains original rendered content (A/B) and not X/Y
+    expect(screen.getByText('A')).toBeInTheDocument();
+    expect(screen.getByText('B')).toBeInTheDocument();
+  });
+
+  test('re-renders when notifications length changes', () => {
+    const initialProps = {
+      notifications: [
+        { id: 1, type: 'default', value: 'A' }
+      ],
+      displayDrawer: true
+    };
+    const { rerender } = render(<Notifications {...initialProps} />);
+    const nextPropsLonger = {
+      notifications: [
+        { id: 1, type: 'default', value: 'A' },
+        { id: 2, type: 'urgent', value: 'B' }
+      ],
+      displayDrawer: true
+    };
+    rerender(<Notifications {...nextPropsLonger} />);
+    expect(screen.getByText('A')).toBeInTheDocument();
+    expect(screen.getByText('B')).toBeInTheDocument();
+  });
 });
