@@ -28,10 +28,16 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
+    if (typeof document !== 'undefined') {
+      document.addEventListener('keydown', this.handleKeyDown);
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('keydown', this.handleKeyDown);
+    }
   }
 
   handleKeyDown(event) {
