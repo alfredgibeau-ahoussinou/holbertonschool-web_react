@@ -41,24 +41,23 @@ describe('Notifications', () => {
     
         await store.dispatch(fetchNotifications());
     
-        const { container } = render(
+        render(
           <Provider store={store}>
             <Notifications />
           </Provider>
         );
     
-        const notificationsDrawer = container.querySelector('.Notifications');
-        expect(notificationsDrawer).toHaveClass('visible');
+        const listText = screen.queryByText('Here is the list of notifications');
+        expect(listText).toBeInTheDocument();
+        expect(listText).not.toBeVisible();
     
         fireEvent.click(screen.getByText(/your notifications/i));
-        expect(notificationsDrawer).not.toHaveClass('visible');
-        expect(screen.queryByRole('listitem', { name: 'New course available' })).not.toBeInTheDocument();
-        expect(screen.queryByRole('listitem', { name: 'New resume available' })).not.toBeInTheDocument();
-    
-        fireEvent.click(screen.getByText(/your notifications/i));
-        expect(notificationsDrawer).toHaveClass('visible');
+        expect(listText).toBeVisible();
         expect(screen.getByText('New course available')).toBeInTheDocument();
         expect(screen.getByText('New resume available')).toBeInTheDocument();
+    
+        fireEvent.click(screen.getByText(/your notifications/i));
+        expect(listText).not.toBeVisible();
       });
 
     test('close drawer on close button', async () => {
@@ -75,15 +74,18 @@ describe('Notifications', () => {
     
         await store.dispatch(fetchNotifications());
     
-        const { container } = render(
+        render(
           <Provider store={store}>
             <Notifications />
           </Provider>
         );
     
-        const notificationsDrawer = container.querySelector('.Notifications');
+        const listText = screen.queryByText('Here is the list of notifications');
+        expect(listText).not.toBeVisible();
+        fireEvent.click(screen.getByText(/your notifications/i));
+        expect(listText).toBeVisible();
         fireEvent.click(screen.getByAltText('close icon'));
-        expect(notificationsDrawer).not.toHaveClass('visible');
+        expect(listText).not.toBeVisible();
       });
     
     test('Marks notification as read', () => {
@@ -98,7 +100,6 @@ describe('Notifications', () => {
                         { "id": 2, "type": "urgent", "value": "New resume available" },
                         { "id": 3, "type": "urgent", "html": { __html: '<strong>Urgent requirement</strong> - complete by EOD' } }
                     ],
-                    displayDrawer: true,
                 },
             },
         });
